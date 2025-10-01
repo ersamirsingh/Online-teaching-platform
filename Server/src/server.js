@@ -1,16 +1,20 @@
 const express = require('express')
 const app = express()
+require('dotenv').config()
 const cookieParser = require('cookie-parser')
 const main = require('./Config/MongoDB')
 const redisClient = require('./Config/RedisDB')
-
-
-require('dotenv').config()
-
+// const userRouter = require('./Routes/UserRouter')
+const authRouter = require('./Routes/AuthRouter')
 
 
 app.use(express.json())
 app.use(cookieParser())
+
+
+
+app.use('/auth', authRouter)
+// app.use('/user', userRouter)
 
 
 
