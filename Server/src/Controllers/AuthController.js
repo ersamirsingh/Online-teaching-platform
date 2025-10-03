@@ -115,14 +115,27 @@ const Logout = async (req, res)=>{
 
 
 
-const DelteUser = async (req, res)=>{
+const DeleteUser = async (req, res)=>{
 
    try {
+
+      const _id = req.user?._id;
+      if(!_id)
+         throw new Error('Unauthorized access')
+
+      const user = await User.findOneAndDelete(_id)
+
+      res.clearCookie('Token', null, {expiresIn: new Date(Date.now())})
+      res.status(200).json({
+         message: 'User deleted successfully'
+      })
       
    } catch (error) {
-      
+      res.status(500).json({
+         message: error.messsage
+      })
    }
 }
 
 
-module.exports = {Register, Login, Logout}
+module.exports = {Register, Login, Logout, DeleteUser}
