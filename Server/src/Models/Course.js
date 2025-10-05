@@ -24,11 +24,8 @@ const courseSchema = new Schema({
    },
    lessons: [
       {
-         _id : false,
-        title: String,
-        content: String,
-        duration: Number,
-        order: Number,
+        type: Schema.Types.ObjectId,
+        ref: 'lesson'
       },
    ],
    teacherId: {

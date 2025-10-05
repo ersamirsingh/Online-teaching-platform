@@ -120,8 +120,9 @@ const getCourses = async (req, res)=>{
          })
 
       const courses = await Course.find({teacherId: _id})
+      // const courses = await Course.find({teacherId: _id}).populate('lessons')
       if(!courses)
-         res.status(400).json({
+         return res.status(400).json({
             message: 'courses not found'
          })
 
