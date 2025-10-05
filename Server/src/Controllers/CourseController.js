@@ -1,13 +1,38 @@
+const Course = require("../Models/Course")
 
 
 
 
-const CreateCourse = async (require, res)=>{
+const CreateCourse = async (req, res)=>{
 
    try {
       
-   } catch (error) {
+      if(!req.body)
+         return res.status(400).json({
+            message: 'Info not found'
+         })
+
+      if(!req.user)
+         throw new Error("Unauthorized access");
+
+
+      //Need to implement cloudinary for store thumbnail link
+         
       
+      req.body.teacherId = req.user._id
+      const course = await Course.create(req.body)
+
+      res.status(200).json({
+         course, 
+         message: 'course created successfully'
+      })
+      
+      
+   } catch (error) {
+      // console.log(error)
+      res.status(500).json({
+         message: error.message,
+      })
    }
 }
 
@@ -16,23 +41,71 @@ const CreateCourse = async (require, res)=>{
 const UpdateCourse = async (req, res)=>{
 
    try {
+
+      if(!req.body)
+         throw new Error('Missing field')
+
+      const _id = req.user._id
+      if(!_id)
+         return res.status(404).json({
+            message: 'unauthorized access'
+         })
+   
+
+      let course = await Course.findOne({teacherId: _id})
+      if(!course)
+         throw new Error('Course not found')
+
+      course = await Course.findOneAndUpdate({teacherId:_id}, req.body, {new:true})
+
+
+      res.status(200).json({
+         course,
+         message: 'Course updated successfully'
+      })
       
    } catch (error) {
-      
+      // console.log(error)
+      res.status(500).json({
+         messagge: error.message
+         
+      })
    }
 }
 
 
 
 
-const DelteCourse = async (require, res)=>{
+const DeleteCourse = async (req, res)=>{
 
    try {
+
+      const _id = req.user._id
+      if(!_id)
+         return res.status(404).json({
+            message: 'user not found'
+         })
+
+      const course = await Course.findOne({teacherId: _id})
+      if(!course)
+         return res.status(400).json({
+            message: 'Course not found'
+         })
+
+      await Course.findOneAndDelete({teacherId: _id})
+
+      return res.status(200).json({
+         message: 'course deleted successfully'
+      })
       
    } catch (error) {
+
+      res.status(500).json({
+         message: error.message
+      })
       
    }
 }
 
 
-module.exports = {CreateCourse, UpdateCourse, DelteCourse}
+module.exports = {CreateCourse, UpdateCourse, DeleteCourse}

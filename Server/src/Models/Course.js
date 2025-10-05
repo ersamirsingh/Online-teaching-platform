@@ -24,6 +24,7 @@ const courseSchema = new Schema({
    },
    lessons: [
       {
+         _id : false,
         title: String,
         content: String,
         duration: Number,
@@ -37,7 +38,6 @@ const courseSchema = new Schema({
    },
    thumbnail: {
       type: String,
-      required: true,
    }
 
 },{ timestamps: true });
