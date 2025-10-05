@@ -119,7 +119,7 @@ const getCourses = async (req, res)=>{
             message: 'unauthorized access'
          })
 
-      const courses = await Course.find({teacherId: teacherId})
+      const courses = await Course.find({teacherId: _id})
       if(!courses)
          res.status(400).json({
             message: 'courses not found'

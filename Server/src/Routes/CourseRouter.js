@@ -6,7 +6,7 @@ const authenticateAdmin = require('../Middlewares/authenticateAdmin')
 
 
 
-couresRouter.delete('/', authenticateAdmin, getCourses)
+couresRouter.get('/', authenticateAdmin, getCourses)
 couresRouter.post('/create', authenticateAdmin,CreateCourse)
 couresRouter.patch('/update', authenticateAdmin, UpdateCourse)
 couresRouter.delete('/delete', authenticateAdmin, DeleteCourse)
