@@ -108,4 +108,35 @@ const DeleteCourse = async (req, res)=>{
 }
 
 
-module.exports = {CreateCourse, UpdateCourse, DeleteCourse}
+
+const getCourses = async (req, res)=>{
+
+   try {
+      
+      const _id = req.user._id
+      if(!_id)
+         return res.status(404).json({
+            message: 'unauthorized access'
+         })
+
+      const courses = await Course.find({teacherId: teacherId})
+      if(!courses)
+         res.status(400).json({
+            message: 'courses not found'
+         })
+
+
+      res.status(200).json({
+         courses,
+      })
+
+
+   } catch (error) {
+      res.status(500).json({
+         message: error.message
+      })
+   }
+}
+
+
+module.exports = {CreateCourse, UpdateCourse, DeleteCourse, getCourses}

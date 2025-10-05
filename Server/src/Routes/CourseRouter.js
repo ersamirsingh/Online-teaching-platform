@@ -1,11 +1,12 @@
 const express = require('express')
 const couresRouter = express.Router()
-const {CreateCourse, UpdateCourse, DeleteCourse} = require('../Controllers/CourseController')
+const {CreateCourse, UpdateCourse, DeleteCourse, getCourses} = require('../Controllers/CourseController')
 const authenticateAdmin = require('../Middlewares/authenticateAdmin')
 
 
 
 
+couresRouter.delete('/', authenticateAdmin, getCourses)
 couresRouter.post('/create', authenticateAdmin,CreateCourse)
 couresRouter.patch('/update', authenticateAdmin, UpdateCourse)
 couresRouter.delete('/delete', authenticateAdmin, DeleteCourse)
