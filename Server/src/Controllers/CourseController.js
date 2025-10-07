@@ -140,4 +140,10 @@ const getCourses = async (req, res)=>{
 }
 
 
+
+
+
+
+
+
 module.exports = {CreateCourse, UpdateCourse, DeleteCourse, getCourses}
