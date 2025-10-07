@@ -11,7 +11,9 @@ const authenticateAdmin = async (req, res, next)=>{
       const {Token} = req.cookies
 
       if(!Token)
-         throw new Error('Token not found')
+         return res.status(400).json({
+            message: 'Unauthorized access'
+         })
 
       const payload = jwt.verify(Token, process.env.SECRET_KEY)
 
@@ -20,7 +22,9 @@ const authenticateAdmin = async (req, res, next)=>{
 
       const isBlocked = await redisClient.exists(`Token ${Token}`)
       if(isBlocked)
-         throw new Error('Invalid Token')
+         return res.status(400).json({
+            message:'Invalid Token'
+         })
 
       const user = await User.findById(payload._id)
       req.user = user

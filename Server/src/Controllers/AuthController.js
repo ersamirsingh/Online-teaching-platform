@@ -4,20 +4,29 @@ const User = require('../Models/User');
 const bcrypt = require('bcrypt');
 const redisClient = require('../Config/RedisDB');
 
+
+
+
 const Register = async (req, res) => {
 
    try {
       const { emailId, password, contact } = req.body;
-      if (!emailId || !password || !contact) throw new Error('Missing fields');
+      if (!emailId || !password || !contact)
+         return res.status(400).json({
+            message: 'Missing fields'
+         })
 
       const existingUser = await User.findOne({ emailId });
       if (existingUser)
          return res.status(400).json({
-            message: 'user already exist with this emailId',
+            message: 'User already exists',
          });
 
       const result = validate(req.body);
-      if (!result.success) throw new Error('Invalid format ' + result.message);
+      if (!result.success)
+         return res.status(400).json({
+            message:result.message
+         });
 
       req.body.password = await bcrypt.hash(password, 10);
 
@@ -26,7 +35,10 @@ const Register = async (req, res) => {
       const Token = jwt.sign({ _id: user._id, role: user.role, emailId: user.emailId }, process.env.SECRET_KEY, { expiresIn: process.env.JWT_EXP });
       res.cookie('Token', Token, { maxAge: parseInt(process.env.JWT_MAX_AGE) });
 
-      res.status(200).json({
+      res.status(201).json({
+         success: true,
+         message: 'User registered successfully',
+         userId: user._id,
          firstName: user.firstName,
          lastName: user.lastName,
          emailId: user.emailId,
@@ -35,8 +47,9 @@ const Register = async (req, res) => {
       });
 
    } catch (error) {
-      return res.status(400).json({
-         message: error.message,
+      return res.status(500).json({
+         message: 'Internal server error',
+         error: error.message
       });
    }
 };
@@ -58,7 +71,7 @@ const Login = async (req, res) => {
       const user = await User.findOne({ emailId });
       if (!user)
          return res.status(400).json({
-            messages: 'user not found',
+            messages: 'User not found',
          });
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -74,17 +87,18 @@ const Login = async (req, res) => {
       res.cookie('Token', Token, { maxAge: parseInt(process.env.JWT_MAX_AGE) });
 
       res.status(201).json({
+         success: true,
+         message: 'User logged in successfully',
+         userId: user._id,
          firstName: user.firstName,
          lastName: user.lastName,
          emailId: user.emailId,
          contact: user.contact,
          role: user.role,
-         message: 'user Logged in successully',
       });
    } catch (error) {
       res.status(500).send(error.message);
    }
-
 };
 
 
@@ -96,17 +110,30 @@ const Logout = async (req, res) => {
       const { Token } = req.cookies;
 
       const payload = jwt.decode(Token);
+      if (!payload) 
+         return res.status(400).json({ 
+            message: "Invalid token" 
+         });
+      
 
-      await redisClient.set(`Token: ${Token}`, 'Blocked');
-      await redisClient.expireAt(`Token: ${Token}`, payload.exp);
+      await redisClient.set(`Token:${Token}`, 'Blocked');
+      await redisClient.expireAt(`Token:${Token}`, payload.exp);
 
-      res.clearCookie('Token', null, { expiresIn: new Date(Date.now()) });
-      res.status(400).json({ message: 'user logged out successfully' });
+      res.clearCookie('Token', null, {expiresIn: new Date(Date.now())})
+
+      return res.status(201).json({
+         success: true,
+         message: 'User logged out successfully',
+      });
 
    } catch (error) {
-      res.status(500).json({ message: 'Internal error', error: error.message });
+      return res.status(500).json({
+         message: 'Internal server error',
+         error: error.message,
+      });
    }
 };
+
 
 
 

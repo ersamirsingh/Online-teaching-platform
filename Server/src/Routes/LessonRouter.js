@@ -5,7 +5,7 @@ const {addLesson, deleteLesson, updateLesson} = require('../Controllers/LessonCo
 const authenticateUser = require('../Middlewares/authenticateUser')
 
 
-lessonRouter.get('/', authenticateUser, fetchAllLesson)
+// lessonRouter.get('/', authenticateUser, fetchAllLesson)
 lessonRouter.post('/add', authenticateAdmin, addLesson)
 // lessonRouter.get('/:id', authenticateUser, getLesson)
 lessonRouter.patch('/update/:id', authenticateAdmin, updateLesson)   //id -> lesson id

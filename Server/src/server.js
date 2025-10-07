@@ -4,11 +4,10 @@ require('dotenv').config()
 const cookieParser = require('cookie-parser')
 const main = require('./Config/MongoDB')
 const redisClient = require('./Config/RedisDB')
-const userRouter = require('./Routes/UserRouter')
 const authRouter = require('./Routes/AuthRouter')
 const couresRouter = require('./Routes/CourseRouter')
 const lessonRouter = require('./Routes/LessonRouter')
-
+const enrollmentRouter = require('./Routes/EnrollmentRouter')
 
 
 app.use(express.json())
@@ -18,9 +17,9 @@ app.use(cookieParser())
 
 
 app.use('/auth', authRouter)
-app.use('/user', userRouter)
 app.use('/course', couresRouter)
 app.use('/lesson', lessonRouter)
+app.use('/enrollment', enrollmentRouter)
 
 
 

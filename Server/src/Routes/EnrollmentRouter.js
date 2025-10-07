@@ -1,7 +1,14 @@
 const express = require('express')
 const enrollmentRouter = express.Router()
+const {createEnrollment, getEnrollmentsByStudent, updateProgress, deleteEnrollment} = require('../Controllers/EnrollmentController');
+const authenticateUser = require('../Middlewares/authenticateUser');
 
 
-enrollmentRouter.get('/enrolled', getAllEnrolledCourses)
-enrollmentRouter.post('/:id/enroll', courseEnrollment)
-enrollmentRouter.get('/:id/students', enrolledStudent)   ///:id -> course id
+enrollmentRouter.post('/', authenticateUser, createEnrollment)
+enrollmentRouter.get('/:studentId', authenticateUser, getEnrollmentsByStudent)
+enrollmentRouter.patch('/:id', authenticateUser, updateProgress)
+enrollmentRouter.delete('/:id', authenticateUser, deleteEnrollment)
+
+
+
+module.exports = enrollmentRouter
