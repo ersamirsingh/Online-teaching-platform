@@ -17,13 +17,19 @@ const replySchema = new Schema({
    },
 
    createdAt:{
-      type: DataTransfer,
+      type: Date,
       default: Date.now(),
    }
 }, {_id: false})
 
 
 const discussionSchema = new Schema({
+
+   courseId:{
+      type: Schema.Types.ObjectId,
+      ref: 'course',
+      required: true,
+   },
 
    userId:{
       type: Schema.Types.ObjectId,
@@ -37,12 +43,8 @@ const discussionSchema = new Schema({
       trim: true
    },
 
-   createdAt:{
-      type: DataTransfer,
-      default: Date.now(),
-   },
+   replies: [replySchema]
 
-   replies: {replySchema}
 }, {timestamps: true})
 
 

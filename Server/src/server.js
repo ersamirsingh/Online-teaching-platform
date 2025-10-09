@@ -9,7 +9,7 @@ const couresRouter = require('./Routes/CourseRoutes')
 const lessonRouter = require('./Routes/LessonRoutes')
 const enrollmentRouter = require('./Routes/EnrollmentRoutes')
 const quizRouter = require('./Routes/QuizRoutes')
-
+const discussionRouter = require('./Routes/DiscussionRoutes')
 
 
 app.use(express.json())
@@ -23,6 +23,7 @@ app.use('/course', couresRouter)
 app.use('/lesson', lessonRouter)
 app.use('/enrollment', enrollmentRouter)
 // app.use('/quiz', quizRouter)
+app.use('/discussion', discussionRouter)
 
 
 
