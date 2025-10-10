@@ -10,12 +10,18 @@ const lessonRouter = require('./Routes/LessonRoutes')
 const enrollmentRouter = require('./Routes/EnrollmentRoutes')
 const quizRouter = require('./Routes/QuizRoutes')
 const discussionRouter = require('./Routes/DiscussionRoutes')
+const cors = require('cors')
+
 
 
 app.use(express.json())
 app.use(cookieParser())
 
 
+app.use(cors({
+   origin: 'http://localhost:5173',
+   credentials: true
+}))
 
 
 app.use('/auth', authRouter)
