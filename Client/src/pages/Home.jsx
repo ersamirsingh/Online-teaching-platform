@@ -1,11 +1,17 @@
 import React from "react"
+import Nav from "../components/Nav"
+
+
 
 
 function Home(){
 
 
    return(
-      <>I'm home page.</>
+      <>
+      <Nav/>
+      <div className="h-screen flex items-center justify-center"><p>I'm home page</p></div>
+      </>
    )
 }
 
