@@ -46,7 +46,7 @@ const Register = async (req, res) => {
          });
       }
 
-      // console.log(password)
+      console.log('password', password)
       req.body.password = await bcrypt.hash(password, 10);
 
       if (!process.env.SECRET_KEY || !process.env.JWT_EXP) {

@@ -7,18 +7,16 @@ import {
 } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Toaster } from 'react-hot-toast';
+import { checkAuth } from './store/authSlice';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import { checkAuth } from './store/authSlice';
 
 
-// Protected Route Component
-const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useSelector(state => state.auth);
-  return isAuthenticated ? children : <Navigate to="/login" />;
-};
+
+
+
+
 
 function App() {
 

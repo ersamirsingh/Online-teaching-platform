@@ -41,8 +41,8 @@ function Login() {
       <div className="min-h-screen flex items-center justify-center p-4 bg-base-200">
          <div className="card w-96 bg-base-100 shadow-xl">
          <div className="card-body">
-            <h2 className="card-title justify-center text-3xl mb-6">TechStack</h2>
 
+            <h2 className="card-title justify-center text-3xl mb-6">TechBEE</h2>
             {error && (
                <div className="alert alert-error mb-4">
                <svg
@@ -94,6 +94,7 @@ function Login() {
                   <input
                      type={showPassword ? 'text' : 'password'}
                      placeholder="password"
+                     autoComplete='YourName#987!'
                      className={`input input-bordered w-full pr-10 ${
                         errors.password ? 'input-error' : ''
                      }`}
