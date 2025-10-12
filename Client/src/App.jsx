@@ -11,6 +11,7 @@ import { checkAuth } from './store/authSlice';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Admin from './pages/Admin';
 
 
 
@@ -22,26 +23,19 @@ function App() {
 
 
   const dispatch = useDispatch()
-  const {isAuthenticated, loading} = useSelector(state=> state.auth)
+  const {isAuthenticated, loading, user} = useSelector(state=> state.auth)
 
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
-      </div>
-    );
-  }
-
   return (
 
     <Router>
 
       <Routes>
+
          <Route
           path="/"
           element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
@@ -54,6 +48,11 @@ function App() {
           path="/signup"
           element={isAuthenticated ? <Navigate to="/" /> : <Register></Register>}
         ></Route>
+        <Route
+          path="/admin"
+          element={isAuthenticated && (user.role === 'admin') ? <Admin/> : <Navigate to='/'/>}
+        ></Route>
+
       </Routes>
 
     </Router>
