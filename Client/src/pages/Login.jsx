@@ -8,7 +8,8 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 
 const loginSchema = z.object({
-  emailId: z.string().email('Invalid Email')
+  emailId: z.string().email('Invalid Email'),
+  password: z.string()
 });
 
 function Login() {
@@ -29,7 +30,8 @@ function Login() {
       }
    }, [isAuthenticated, navigate]);
 
-   const onSubmit = data => {
+   const sendData = data => {
+      // console.log(data)
       dispatch(loginUser(data));
    };
 
@@ -60,7 +62,7 @@ function Login() {
                </div>
             )}
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(sendData)}>
                <div className="form-control">
                {' '}
                {/* Removed mt-4 from first form-control for tighter spacing to title or global error */}
@@ -93,7 +95,7 @@ function Login() {
                      type={showPassword ? 'text' : 'password'}
                      placeholder="password"
                      className={`input input-bordered w-full pr-10 ${
-                     errors.password ? 'input-error' : ''
+                        errors.password ? 'input-error' : ''
                      }`}
                      {...register('password')}
                   />

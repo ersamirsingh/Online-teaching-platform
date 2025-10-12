@@ -7,10 +7,11 @@ export const registerUser = createAsyncThunk(
 
     'auth/register',
     async (userData, { rejectWithValue }) => {
+        // console.log(userData)
 
         try{
 
-            const response =  await axiosClient.post('/user/register', userData);
+            const response =  await axiosClient.post('/auth/register', userData);
             return response.data.user;
 
         } catch (error) {
@@ -26,9 +27,12 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
     'auth/login',
     async (credentials, { rejectWithValue }) => {
+        // console.log(credentials)
+
         try {
-            const response = await axiosClient.post('/user/login', credentials);
-            return response.data.user;
+            const response = await axiosClient.post('/auth/login', credentials);
+            // console.log(response)
+            return response?.data?.user;
         } catch (error) {
             if (error.response) {
                 return rejectWithValue(error.response.data);
@@ -45,7 +49,7 @@ export const logoutUser = createAsyncThunk(
     'auth/logout',  //slice/route
     async (_, { rejectWithValue }) => {
         try {
-            await axiosClient.post('/user/logout');
+            await axiosClient.post('/auth/logout');
             return null;
         } catch (error) {
             return rejectWithValue(error);
@@ -59,8 +63,9 @@ export const checkAuth = createAsyncThunk(
     'auth/check',
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await axiosClient.get('/user/check');
-            return data.user;
+            const { data } = await axiosClient.get('/auth/check');
+            // console.log(data)
+            return data;
         } catch (error) {
             return rejectWithValue(error);
         }

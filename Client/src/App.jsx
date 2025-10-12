@@ -5,10 +5,13 @@ import {
   Route,
   Navigate,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Home from './pages/Home';
+import { checkAuth } from './store/authSlice';
 
 
 // Protected Route Component
@@ -18,44 +21,43 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  return (
-    <Router>
-      <div className="min-h-screen flex flex-col">
-        <Toaster position="top-center" />
-        {/* <Navbar /> */}
 
-        <main className="flex-grow container mx-auto px-4 py-8">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
 
-            {/* Protected Routes */}
-            <Route
-              path="/"
-              element={
-                <ProtectedRoute>
-                  <h1>Home Page</h1>
-                </ProtectedRoute>
-              }
-            />
+  const dispatch = useDispatch()
+  const {isAuthenticated, loading} = useSelector(state=> state.auth)
 
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <h1>Profile Page</h1>
-                </ProtectedRoute>
-              }
-            />
 
-            {/* Catch all route */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
 
-        {/* <Footer /> */}
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
       </div>
+    );
+  }
+
+  return (
+
+    <Router>
+
+      <Routes>
+         <Route
+          path="/"
+          element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" /> : <Login></Login>}
+        ></Route>
+        <Route
+          path="/signup"
+          element={isAuthenticated ? <Navigate to="/" /> : <Register></Register>}
+        ></Route>
+      </Routes>
+
     </Router>
   );
 }
