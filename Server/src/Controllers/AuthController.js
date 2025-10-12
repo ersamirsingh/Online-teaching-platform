@@ -139,7 +139,7 @@ const Login = async (req, res) => {
          role: user.role,
       });
    } catch (error) {
-      console.error('Login error:', error);
+      // console.error('Login error:', error);
       return res.status(500).json({
          success: false,
          message: 'Login failed',
@@ -269,4 +269,23 @@ const updateUser = async (req, res) => {
    }
 };
 
-module.exports = { Register, Login, Logout, DeleteUser, fetchUser, updateUser };
+
+const validUser = async (req, res)=>{
+
+
+   const reply = {
+      success: true,
+      firstName: req.user?.firstName,
+      emailId: req.user.emailId,
+      _id: req.user._id,
+      role: req.user.role
+   }
+
+   res.status(200).json({
+      user: reply,
+      message: 'Valid user'
+   })
+}
+
+
+module.exports = { Register, Login, Logout, DeleteUser, fetchUser, updateUser, validUser };
