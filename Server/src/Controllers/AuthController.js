@@ -11,6 +11,16 @@ const redisClient = require('../Config/RedisDB');
 //    maxAge: parseInt(process.env.JWT_MAX_AGE)
 // };
 
+
+
+const cookieOptions = {
+   httpOnly: true,
+   secure: process.env.NODE_ENV === 'production' ? true : false,
+   sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+   maxAge: parseInt(process.env.JWT_MAX_AGE)
+};
+
+
 const Register = async (req, res) => {
 
    try {
@@ -30,21 +40,27 @@ const Register = async (req, res) => {
          });
 
       const result = validate(req.body);
-      if (!result.success)
+      if (!result.success){
             return res.status(400).json({
             message: result.message,
          });
+      }
 
+      // console.log(password)
       req.body.password = await bcrypt.hash(password, 10);
 
+      if (!process.env.SECRET_KEY || !process.env.JWT_EXP) {
+         throw new Error('JWT configuration missing');
+      }
+
       const user = await User.create(req.body);
-      const token = jwt.sign(
+      const Token = jwt.sign(
          { _id: user._id, role: user.role, emailId: user.emailId },
          process.env.SECRET_KEY,
          { expiresIn: process.env.JWT_EXP }
       );
 
-      res.cookie('Token', token, cookieOptions);
+      res.cookie('Token', Token, cookieOptions);
 
       res.status(201).json({
          success: true,
@@ -70,33 +86,47 @@ const Register = async (req, res) => {
    }
 };
 
+
+
 const Login = async (req, res) => {
+
    try {
-      console.log('Samir')
       const { emailId, password } = req.body;
 
       if (!emailId || !password) {
-         return res.status(400).json({
-            success: false,
-            message: 'Email and password are required',
+         return res.status(400).json({ 
+            success: false, 
+            message: 'Email and password are required' 
          });
       }
 
       const user = await User.findOne({ emailId });
-      if (!user || !(await user.comparePassword(password))) {
-         return res.status(401).json({
-            success: false,
-            message: 'Invalid credentials',
+      if (!user) {
+         return res.status(401).json({ 
+            success: false, 
+            message: 'Invalid credentials' 
          });
       }
 
-      const token = jwt.sign(
+      const isMatched = await bcrypt.compare(password, user?.password);
+      if (!isMatched) {
+         return res.status(401).json({ 
+            success: false, 
+            message: 'Invalid credentials-pass' 
+         });
+      }
+
+      if (!process.env.SECRET_KEY || !process.env.JWT_EXP) {
+         throw new Error('JWT configuration missing');
+      }
+
+      const Token = jwt.sign(
          { _id: user._id, role: user.role, emailId: user.emailId },
          process.env.SECRET_KEY,
          { expiresIn: process.env.JWT_EXP }
       );
 
-      res.cookie('Token', token, cookieOptions);
+      res.cookie('Token', Token, cookieOptions);
 
       res.status(201).json({
          success: true,
@@ -109,6 +139,7 @@ const Login = async (req, res) => {
          role: user.role,
       });
    } catch (error) {
+      console.error('Login error:', error);
       return res.status(500).json({
          success: false,
          message: 'Login failed',
@@ -116,6 +147,8 @@ const Login = async (req, res) => {
       });
    }
 };
+
+
 
 const Logout = async (req, res) => {
    try {
@@ -150,7 +183,7 @@ const Logout = async (req, res) => {
    }
    };
 
-   const DeleteUser = async (req, res) => {
+const DeleteUser = async (req, res) => {
    try {
       const { Token } = req.cookies;
 

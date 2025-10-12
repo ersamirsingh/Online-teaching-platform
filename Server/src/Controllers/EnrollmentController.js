@@ -65,7 +65,7 @@ const getEnrollmentsByStudent = async (req, res) => {
       const student = await User.findById(studentId)
       if(!student)
          return res.status(404).json({
-            message: 'User not found'
+            message: 'Student not found'
          })
 
       const enrollments = await Enrollment.find({ studentId }).populate('courseId', 'title category price thumbnail');
@@ -134,7 +134,7 @@ const deleteEnrollment = async (req, res) => {
    try {
       const { id } = req.params;
       const enrollment = await Enrollment.findByIdAndDelete(id);
-
+ 
       if (!enrollment) {
          return res.status(404).json({ 
             message: 'Enrollment not found' 

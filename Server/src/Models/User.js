@@ -62,19 +62,8 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
-};
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
-  try {
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
-  } catch (error) {
-    next(error);
-  }
-});
+
 
 const User = mongoose.model('user', userSchema);
 module.exports = User;
