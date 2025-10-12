@@ -151,7 +151,9 @@ const Login = async (req, res) => {
 
 
 const Logout = async (req, res) => {
+
    try {
+      // console.log('logout')
       const { Token } = req.cookies;
       if (!Token) {
          return res.status(400).json({
@@ -181,7 +183,7 @@ const Logout = async (req, res) => {
          error: error.message,
       });
    }
-   };
+};
 
 const DeleteUser = async (req, res) => {
    try {
