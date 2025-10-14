@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
+import TechBEELanding from './pages/TechBee';
 
 
 
@@ -35,18 +36,22 @@ function App() {
     <Router>
 
       <Routes>
-
+          <Route
+            path="/"
+            to = "/techbee"
+            element={<TechBEELanding/>}
+          ></Route>
          <Route
-          path="/"
+          path="/home"
           element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
         ></Route>
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login></Login>}
+          element={isAuthenticated ? <Navigate to="/home" /> : <Login></Login>}
         ></Route>
         <Route
           path="/signup"
-          element={isAuthenticated ? <Navigate to="/" /> : <Register></Register>}
+          element={isAuthenticated ? <Navigate to="/home" /> : <Register></Register>}
         ></Route>
         <Route
           path="/admin"
