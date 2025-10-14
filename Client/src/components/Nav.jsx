@@ -54,8 +54,10 @@ export default function Nav() {
                      <button 
                         onClick={handleLogout}
                         disabled={loading}
-                     >Logout</button></li>
-                     {user?.role == 'admin' && <li><NavLink to='/admin'>Admin</NavLink></li>}
+                     >Logout</button>
+                  </li>
+                  {user?.role == 'admin' && <li><NavLink to='/admin'>Admin</NavLink></li>}
+                  {<li><NavLink to='/profile'>Profile</NavLink></li>}
                </ul>
             </div>
          </div>

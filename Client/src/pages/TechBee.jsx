@@ -482,7 +482,7 @@ export default function TechBEELanding() {
         .animate-bounce-slow-delayed { animation: bounce-slow-delayed 8s infinite ease-in-out; }
         .animate-spin-slow { animation: spin-slow 20s linear infinite; }
       `}</style> */}
-       <style jsx>{`
+       <style>{`
         @keyframes blob {
           0%, 100% { transform: translate(0px, 0px) scale(1); }
           33% { transform: translate(30px, -50px) scale(1.1); }

@@ -12,40 +12,26 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
-<<<<<<< Updated upstream
 import TechBEELanding from './pages/TechBee';
-
-=======
 import Course from './pages/Course';
->>>>>>> Stashed changes
-
-
-
-
-
+import Quiz from './pages/QuizPage';
+import Subscription from './pages/Subscription';
+import Profile from './pages/Profile';
+import ViewCourses from './utils/ViewCourses';
 
 function App() {
-
-
-  const dispatch = useDispatch()
-  const {isAuthenticated, user} = useSelector(state=> state.auth)
-
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector(state => state.auth);
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
   return (
-
     <Router>
-
       <Routes>
-          <Route
-            path="/"
-            to = "/techbee"
-            element={<TechBEELanding/>}
-          ></Route>
-         <Route
+        <Route path="/" to="/techbee" element={<TechBEELanding />}></Route>
+        <Route
           path="/home"
           element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
         ></Route>
@@ -55,19 +41,50 @@ function App() {
         ></Route>
         <Route
           path="/signup"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Register></Register>}
+          element={
+            isAuthenticated ? <Navigate to="/home" /> : <Register></Register>
+          }
         ></Route>
         <Route
           path="/admin"
-          element={isAuthenticated && (user.role === 'admin') ? <Admin/> : <Navigate to='/'/>}
+          element={
+            isAuthenticated && user.role === 'admin' ? (
+              <Admin />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         ></Route>
         <Route
           path="/course"
-          element={isAuthenticated ? <Course/> : <Navigate to='/login' />}
+          element={isAuthenticated ? <Course /> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/quiz"
+          element={isAuthenticated ? <Quiz /> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/subscription"
+          element={
+            isAuthenticated ? <Subscription /> : <Navigate to="/login" />
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/viewcourses"
+          element={
+            isAuthenticated && user.role === 'admin' ? (
+              <ViewCourses />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         ></Route>
 
       </Routes>
-
     </Router>
   );
 }
