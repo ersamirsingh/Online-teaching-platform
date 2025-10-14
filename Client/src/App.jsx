@@ -12,12 +12,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
-<<<<<<< Updated upstream
+import Course from './pages/Course';
 import TechBEELanding from './pages/TechBee';
 
-=======
-import Course from './pages/Course';
->>>>>>> Stashed changes
 
 
 
@@ -51,7 +48,7 @@ function App() {
         ></Route>
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Login></Login>}
+          element={isAuthenticated ? <Navigate to="/" /> : <Login></Login>}
         ></Route>
         <Route
           path="/signup"
