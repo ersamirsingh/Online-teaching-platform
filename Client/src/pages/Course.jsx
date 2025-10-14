@@ -16,7 +16,7 @@ export default function Course() {
       try {
          setLoading(true);
          const response = await axiosClient.get('/course');
-         console.log(response.data.courses);
+         // console.log(response.data.courses);
          setCourses(response.data.courses);
       } catch (error) {
          toast.error(error.message)
