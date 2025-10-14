@@ -104,6 +104,7 @@ const updateLesson = async (req, res)=>{
 
       lesson = await Lesson.findByIdAndUpdate({_id: id}, data, {new: true});
       res.status(201).json({
+         success: true,
          message: 'lesson updated successfully',
          lesson
       })
@@ -120,4 +121,38 @@ const updateLesson = async (req, res)=>{
 
 
 
-module.exports = {addLesson, deleteLesson, updateLesson}
+const fetchAllLessons = async (req, res) => {
+
+   try {
+
+      const {courseId} = req.params
+      if(!courseId)
+         return res.status(400).json({
+            success: false,
+            message: 'CourseId not found'
+         })
+      
+      const lessons = await Lesson.find({courseId})
+      if(!lessons)
+         return res.status(404).json({
+            message: 'Lessons not found'
+         })
+
+      res.status(201).json({
+         success: true,
+         lessons,
+      })
+
+   } catch (error) {
+      res.status(500).json({
+         message: 'Internal server error',
+         message: error.message
+      })
+   }
+}
+
+
+
+
+
+module.exports = {addLesson, deleteLesson, updateLesson, fetchAllLessons}

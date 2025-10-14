@@ -7,7 +7,7 @@ const authenticateUser = require('../Middlewares/authenticateUser')
 
 
 
-couresRouter.get('/', authenticateAdmin, getCourses)
+couresRouter.get('/', authenticateUser, getCourses)
 // couresRouter.post('/:id', authenticateUser, getSingleCourse)
 couresRouter.post('/create', authenticateAdmin, CreateCourse)
 couresRouter.patch('/update/:id', authenticateAdmin, UpdateCourse)
