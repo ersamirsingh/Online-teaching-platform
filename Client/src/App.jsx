@@ -12,12 +12,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
-import TechBEELanding from './pages/TechBee';
 import Course from './pages/Course';
-import Quiz from './pages/QuizPage';
-import Subscription from './pages/Subscription';
-import Profile from './pages/Profile';
-import ViewCourses from './utils/ViewCourses';
+import TechBEELanding from './pages/TechBee';
+
+
+
+
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -37,7 +39,7 @@ function App() {
         ></Route>
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Login></Login>}
+          element={isAuthenticated ? <Navigate to="/" /> : <Login></Login>}
         ></Route>
         <Route
           path="/signup"
