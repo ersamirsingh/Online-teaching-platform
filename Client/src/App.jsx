@@ -14,8 +14,10 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import Course from './pages/Course';
 import TechBEELanding from './pages/TechBee';
-
-
+import ViewCourses from './utils/ViewCourses';
+import Quiz from './pages/QuizPage'
+import Profile from './pages/Profile'
+import Subscription from './pages/Subscription'
 
 
 
@@ -32,22 +34,22 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" to="/techbee" element={<TechBEELanding />}></Route>
+        <Route path="/" element={<TechBEELanding />}></Route>
         <Route
           path="/home"
           element={isAuthenticated ? <Home /> : <Navigate to="/login" />}
         ></Route>
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login></Login>}
+          element={isAuthenticated ? <Navigate to="/" /> : <Login/>}
         ></Route>
         <Route
           path="/signup"
           element={
-            isAuthenticated ? <Navigate to="/home" /> : <Register></Register>
+            isAuthenticated ? <Navigate to="/home" /> : <Register/>
           }
         ></Route>
-        <Route
+         <Route
           path="/admin"
           element={
             isAuthenticated && user.role === 'admin' ? (
