@@ -88,11 +88,11 @@ const Header = () => {
                       <NavLink to="/admin">Admin</NavLink>
                     </li>
                   )}
-                  {user?.role === "admin" && (
+                  {
                     <li>
                       <NavLink to="/profile">Profile</NavLink>
                     </li>
-                  )}
+                  }
                 </ul>
               </div>
             </>
