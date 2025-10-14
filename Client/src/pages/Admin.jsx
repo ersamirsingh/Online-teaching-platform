@@ -25,8 +25,9 @@ export default function Admin() {
 
       try {
          setLoading(true)
-         const response = await axiosClient.get('/course');
+        const response = await axiosClient.get('/course');
          setCourses(response?.data?.courses);
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
          toast.error('Failed to fetch courses');
       }

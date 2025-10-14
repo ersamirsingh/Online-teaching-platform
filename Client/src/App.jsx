@@ -12,8 +12,12 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
+<<<<<<< Updated upstream
 import TechBEELanding from './pages/TechBee';
 
+=======
+import Course from './pages/Course';
+>>>>>>> Stashed changes
 
 
 
@@ -24,7 +28,7 @@ function App() {
 
 
   const dispatch = useDispatch()
-  const {isAuthenticated, loading, user} = useSelector(state=> state.auth)
+  const {isAuthenticated, user} = useSelector(state=> state.auth)
 
 
   useEffect(() => {
@@ -56,6 +60,10 @@ function App() {
         <Route
           path="/admin"
           element={isAuthenticated && (user.role === 'admin') ? <Admin/> : <Navigate to='/'/>}
+        ></Route>
+        <Route
+          path="/course"
+          element={isAuthenticated ? <Course/> : <Navigate to='/login' />}
         ></Route>
 
       </Routes>

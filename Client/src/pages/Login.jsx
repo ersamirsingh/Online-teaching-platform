@@ -37,6 +37,15 @@ function Login() {
 
   // console.log(error)
 
+  
+   if (loading) {
+      return (
+         <div className="min-h-screen flex items-center justify-center">
+         <span className="loading loading-spinner loading-lg"></span>
+         </div>
+      );
+   }
+
    return (
       <div className="min-h-screen flex items-center justify-center p-4 bg-base-200">
          <div className="card w-96 bg-base-100 shadow-xl">

@@ -23,25 +23,25 @@ export default function Nav() {
 
       <nav className="navbar bg-base-100 shadow-lg px-4">
 
-                <div className="flex-1 bg-center">
-                    <NavLink to="/" className="btn btn-ghost text-xl">TechBEE</NavLink>
-                </div>
+         <div className="flex-1 bg-center">
+            <NavLink to="/" className="btn btn-ghost text-xl">TechBEE</NavLink>
+         </div>
 
-                <div className="mr-6">
-                    <NavLink to="/" className="btn btn-ghost rounded-2xl">Home</NavLink>
-                </div>
+         <div className="mr-6">
+            <NavLink to="/" className="btn btn-ghost rounded-2xl">Home</NavLink>
+         </div>
 
-                <div className="mr-6">
-                    <NavLink to="/course" className="btn btn-ghost rounded-2xl"> Course </NavLink>
-                </div>
+         <div className="mr-6">
+            <NavLink to="/course" className="btn btn-ghost rounded-2xl"> Course </NavLink>
+         </div>
 
-                <div className="mr-6">
-                    <NavLink to="/quiz" className="btn btn-ghost rounded-2xl"> Quiz </NavLink>
-                </div>
+         <div className="mr-6">
+            <NavLink to="/quiz" className="btn btn-ghost rounded-2xl"> Quiz </NavLink>
+         </div>
 
-                 <div className="mr-6">
-                    <NavLink to="/subscription" className="btn btn-ghost rounded-2xl"> Subscription </NavLink>
-                </div>
+         <div className="mr-6">
+            <NavLink to="/subscription" className="btn btn-ghost rounded-2xl"> Subscription </NavLink>
+         </div>
 
          <div className="flex-none gap-4">
 
