@@ -60,11 +60,11 @@ export default function Course() {
    return (
       <div className="min-h-screen bg-base-200">
          <Nav />
-         <div className="container mx-auto px-4 py-8">
+         <div className="container mx-auto px-4 py-8 min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 overflow-hidden relative">
          <h2 className="text-3xl font-bold mb-8">Available Courses</h2>
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {courses.map(course => (
-               <div key={course._id} className="card bg-base-100 shadow-xl">
+               <div key={course._id} className="group min-h-[150px] w-full bg-white/15 backdrop-blur-xl rounded-3xl p-6 border border-white/20 transform transition-all duration-500 hover:scale-105 hover:bg-white/25 hover:shadow-2xl cursor-pointer">
                <figure>
                   <img
                      src={course.thumbnail || 'https://placehold.co/600x400'}
@@ -83,16 +83,16 @@ export default function Course() {
                      ₹{course.price.toLocaleString()}
                      </span>
                      <div className="card-actions">
-                     <button className="btn btn-primary">View Details</button>
+                     <button className="btn btn-secondary">View Details</button>
                      </div>
                   </div>
                   <div className="flex items-center gap-2 mt-4 text-sm text-base-content/70">
                      <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     className="h-5 w-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                      >
                      <path
                         strokeLinecap="round"

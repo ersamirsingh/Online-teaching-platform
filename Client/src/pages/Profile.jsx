@@ -21,6 +21,7 @@ function Profile() {
          const response = await axiosClient.get('/auth/user');
          // console.log(response.data)
          setUserInfo(response.data);
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
          toast.error('Failed to fetch user information');
       } finally {

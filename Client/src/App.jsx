@@ -14,7 +14,7 @@ import Home from './pages/Home';
 import Admin from './pages/Admin';
 import Course from './pages/Course';
 import TechBEELanding from './pages/TechBee';
-import ViewCourses from './utils/ViewCourses';
+import ViewCourses from './utils/ViewCoursesAdmin';
 import Quiz from './pages/QuizPage'
 import Profile from './pages/Profile'
 import Subscription from './pages/Subscription'
