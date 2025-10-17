@@ -103,7 +103,7 @@ export default function Course() {
                      </svg>
                      <span>{course.lessons?.length || 0} Lessons</span>
                      <span>•</span>
-                     <span>{new Date(course.updatedAt).toLocaleDateString()}</span>
+                     <span>{course.updatedAt ? new Date(course.updatedAt).toLocaleDateString() : 'Date not available'}</span>
                      {/* <span><button className='btn' onClick={fetchLesson()}>View Lesson</button></span> */}
                   </div>
                </div>
