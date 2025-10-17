@@ -9,11 +9,21 @@ const addLesson = async (req, res) => {
 
    try {
 
-      const { courseId, title, videoUrl, resources, duration } = req.body;
+      const {courseId, title, videoUrl, resources, duration} = req.body;
 
       const course = await Course.findById(courseId);
       if (!course)
-         return res.status(404).json({ message: "Course not found" });
+         return res.status(404).json({ 
+            message: "Course not found" 
+         });
+
+      const existingLesson = await Lesson.findOne({courseId, title});
+      if (existingLesson) {
+         return res.status(400).json({
+            message: 'Lesson with this title already exists for this course',
+         });
+      }
+
 
       const lesson = await Lesson.create({
          courseId,

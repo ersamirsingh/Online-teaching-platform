@@ -15,6 +15,7 @@ const lessonSchema = new Schema({
       required: true,
       trim: true,
       maxLength: 100,
+      unique: true
    },
 
    videoUrl: {
