@@ -3,6 +3,8 @@ import axiosClient from '../API/axiosClient';
 import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router';
+
 
 export default function Course() {
 
@@ -10,6 +12,7 @@ export default function Course() {
 
    const [courses, setCourses] = useState([]);
    const [loading, setLoading] = useState(false);
+   const navigate = useNavigate();
 
    const fetchCourses = async () => {
 
@@ -83,7 +86,7 @@ export default function Course() {
                      ₹{course.price.toLocaleString()}
                      </span>
                      <div className="card-actions">
-                     <button className="btn btn-secondary">View Details</button>
+                     <button className="btn btn-secondary" onClick={()=>navigate(`/lesson/${course._id}`)}>View Details</button>
                      </div>
                   </div>
                   <div className="flex items-center gap-2 mt-4 text-sm text-base-content/70">

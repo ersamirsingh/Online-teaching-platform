@@ -18,10 +18,19 @@ import ViewCourses from './Admin/Course/ViewCoursesAdmin';
 import Quiz from './pages/QuizPage';
 import Profile from './pages/Profile';
 import Subscription from './pages/Subscription';
+import { useParams } from 'react-router-dom';
+import Lesson from './pages/Lesson';
+
+
+
+
+
 
 function App() {
+
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
+  const {courseId} = useParams();
 
   useEffect(() => {
     dispatch(checkAuth());
@@ -74,12 +83,17 @@ function App() {
         <Route
           path="/viewcourses"
           element={
-            isAuthenticated && user.role === 'admin' ? (
+            !isAuthenticated ? ( <Navigate to="/login" />) 
+            : isAuthenticated && user.role === 'admin' ? (
               <ViewCourses />
             ) : (
               <Navigate to="/" />
             )
           }
+        ></Route>
+        <Route
+          path={`/lesson/:courseId`}
+          element={isAuthenticated ? <Lesson/> : <Navigate to="/login" />}
         ></Route>
       </Routes>
     </Router>
