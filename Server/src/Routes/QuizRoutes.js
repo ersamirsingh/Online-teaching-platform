@@ -2,10 +2,10 @@ const express = require('express')
 const authenticateAdmin = require('../Middlewares/authenticateAdmin')
 const authenticateUser = require('../Middlewares/authenticateUser')
 const quizRouter = express.Router()
-const {createQuiz, getQuizes, submitQuiz} = require('../Controllers/QuizController')
+const {createQuiz, getQuizes, submitQuiz, updateQuiz} = require('../Controllers/QuizController')
 
 
-//Quiz for practices
+//Quiz for practices without any courses
 // quizRouter.post('/create', authenticateAdmin, createQuiz)  
 // quizRouter.get('/', authenticateUser, getQuiz)
 // quizRouter.patch('/:id/update', authenticateAdmin, updateQuiz)  //id -> quizId
@@ -15,8 +15,8 @@ const {createQuiz, getQuizes, submitQuiz} = require('../Controllers/QuizControll
 //Course wise Quiz
 quizRouter.post('/:courseId/create', authenticateAdmin, createQuiz)  //id -> courseId
 quizRouter.get('/:courseId', authenticateUser, getQuizes)  //id -> courseId
-quizRouter.post('/:quizId/submit', authenticateUser, submitQuiz)
-// quizRouter.patch('/:id/update', authenticateAdmin, updateCourseQuiz)  
+quizRouter.post('/:quizId/submit', authenticateUser, submitQuiz)  //id -> quizId
+quizRouter.patch('/:id/update', authenticateAdmin, updateQuiz)   //id -> quizId
 
 
 

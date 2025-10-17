@@ -122,9 +122,9 @@ const submitQuiz = async (req, res) => {
       })
 
       const existing = quiz.answers.find(a => a.studentId.toString() === studentId.toString());
-      console.log(existing)
+      // console.log(existing)
       if(existing){
-         console.log(existing)
+         // console.log(existing)
          existing.score = score
          existing.responses = responses
       }
@@ -154,4 +154,17 @@ const submitQuiz = async (req, res) => {
 
 
 
-module.exports = {createQuiz, getQuizes, submitQuiz}
+
+const updateQuiz = async (req, res)=>{
+
+
+   try {
+      
+      // const 
+   } catch (error) {
+      
+   }
+}
+
+
+module.exports = {createQuiz, getQuizes, submitQuiz, updateQuiz}
