@@ -119,7 +119,7 @@ const getCourses = async (req, res)=>{
             message: 'unauthorized access'
          })
 
-      const courses = await Course.find({}).select('_id title description category price lessons teacherId thumbnail createdAt')
+      const courses = await Course.find({}).select('_id title description category price lessons teacherId thumbnail updatedAt')
       // const courses = await Course.find({teacherId: _id}).populate('lessons')
       if(!courses)
          return res.status(400).json({

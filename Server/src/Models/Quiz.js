@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 
 const quizSchema = new Schema({
-   
+
    courseId: {
       type: Schema.Types.ObjectId,
       ref: 'course',
@@ -12,22 +12,43 @@ const quizSchema = new Schema({
 
    questions: [
       {
-         question: { type: String, required: true },
-         options: [{ type: String, required: true }],
-         correctAnswer: { type: String, required: true },
+         question: { 
+            type: String, 
+            required: true 
+         },
+         options: [
+            { 
+               type: String, 
+               required: true 
+            }
+         ],
+         correctAnswer: { 
+            type: String, 
+            required: true 
+         },
       }
    ],
 
    answers: [
       {
-         studentId: { type: Schema.Types.ObjectId, ref: 'user' },
+         studentId: { 
+            type: Schema.Types.ObjectId, 
+            ref: 'user' 
+         },
          responses: [
-         {
-            questionId: { type: Schema.Types.ObjectId },
-            answer: { type: String },
-         }
+            {
+               questionId: { 
+                  type: Schema.Types.ObjectId 
+               },
+               answer: { 
+                  type: String 
+               },
+            }
          ],
-         score: { type: Number, default: 0 },
+         score: { 
+            type: Number, 
+            default: 0 
+         },
       }
    ],
 
