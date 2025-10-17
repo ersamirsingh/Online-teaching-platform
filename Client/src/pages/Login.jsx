@@ -275,7 +275,7 @@ function Login() {
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
-                placeholder="••••••••"
+                placeholder="Password"
                 className={`w-full input input-bordered bg-white/20 text-white placeholder-white/70 border border-white/30 rounded-xl py-3 px-4 pr-10 transition-all duration-300 focus:ring-2 focus:ring-blue-400 ${
                   errors.password ? 'border-red-400' : ''
                 }`}

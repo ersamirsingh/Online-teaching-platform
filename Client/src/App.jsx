@@ -18,7 +18,6 @@ import ViewCourses from './Admin/Course/ViewCoursesAdmin';
 import Quiz from './pages/QuizPage';
 import Profile from './pages/Profile';
 import Subscription from './pages/Subscription';
-import { useParams } from 'react-router-dom';
 import Lesson from './pages/Lesson';
 
 
@@ -30,7 +29,6 @@ function App() {
 
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
-  const {courseId} = useParams();
 
   useEffect(() => {
     dispatch(checkAuth());

@@ -129,7 +129,7 @@ const Register = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="••••••••"
+                placeholder="Password"
                 className={`w-full bg-white/20 text-white placeholder-white/70 border border-white/30 rounded-xl py-3 px-4 pr-10 transition-all duration-300 focus:ring-2 focus:ring-indigo-400 focus:outline-none ${
                   errors.password ? "border-red-400" : ""
                 }`}
