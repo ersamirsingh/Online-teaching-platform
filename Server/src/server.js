@@ -13,7 +13,6 @@ const discussionRouter = require('./Routes/DiscussionRoutes')
 const cors = require('cors')
 
 
-
 app.use(express.json())
 app.use(cookieParser())
 
@@ -28,7 +27,7 @@ app.use('/auth', authRouter)
 app.use('/course', couresRouter)
 app.use('/lesson', lessonRouter)
 app.use('/enrollment', enrollmentRouter)
-// app.use('/quiz', quizRouter)
+app.use('/quiz', quizRouter)
 app.use('/discussion', discussionRouter)
 
 
