@@ -1,5 +1,5 @@
 import React from 'react'
-import Nav from '../components/Nav'
+import Header from '../components/Header'
 
 
 
@@ -15,7 +15,7 @@ export default function Subscription(){
 
    return(
       <>
-      <Nav/>
+      <Header/>
       <div>
          <p>I'm subscription page</p>
       </div>

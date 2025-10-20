@@ -11,15 +11,15 @@ import { checkAuth } from './store/authSlice';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Admin from './pages/Admin';
+import Admin from './Admin/Admin';
 import Course from './pages/Course';
 import TechBEELanding from './pages/TechBee';
-import ViewCourses from './Admin/Course/ViewCoursesAdmin';
+import ViewCourses from './Admin/Course/ViewCourses';
 import Quiz from './pages/QuizPage';
 import Profile from './pages/Profile';
 import Subscription from './pages/Subscription';
 import Lesson from './pages/Lesson';
-
+import CourseDetails from './Admin/Course/CourseDetails';
 
 
 
@@ -79,11 +79,22 @@ function App() {
           element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
         ></Route>
         <Route
-          path="/viewcourses"
+          path="/admin/viewcourses"
           element={
             !isAuthenticated ? ( <Navigate to="/login" />) 
             : isAuthenticated && user.role === 'admin' ? (
               <ViewCourses />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        ></Route>
+        <Route
+          path="/admin/viewcourses/coursedetails"
+          element={
+            !isAuthenticated ? ( <Navigate to="/login" />) 
+            : isAuthenticated && user.role === 'admin' ? (
+              <CourseDetails />
             ) : (
               <Navigate to="/" />
             )
