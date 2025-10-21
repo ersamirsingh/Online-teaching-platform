@@ -4,6 +4,7 @@ import axiosClient from '../../API/axiosClient';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+// import DeleteCourse from './DeleteCourse';
 
 
 
@@ -11,6 +12,7 @@ import { useNavigate } from 'react-router';
 export default function ViewCourses() {
 
   const [courses, setCourses] = useState([]);
+  const [response, setResponse] = useState([])
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ export default function ViewCourses() {
       setCourses(response.data.courses);
     } catch (error) {
       setLoading(true);
-      toast.error('Unable to fetch Courses');
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -32,6 +34,25 @@ export default function ViewCourses() {
   useEffect(() => {
     fetchCourses();
   }, []);
+
+
+  const DeleteCourse = async (courseId)=>{
+
+    try {
+      setLoading(true)
+      const response = await axiosClient.delete(`/course/delete/${courseId}`)
+      console.log(response.data)
+      setResponse(response.data)
+    } catch (error) {
+      setLoading(true)
+      toast.error(error.message)
+    }
+    finally{
+      setLoading(false)
+    }
+  }
+
+
 
   if (loading) {
     return (
@@ -67,7 +88,10 @@ export default function ViewCourses() {
               <span className='absolute bottom-2 left-4'>
                 <button className='btn btn-success' onClick={()=>navigate('/admin/viewcourses/coursedetails')}>View Details</button>
                 <button className='btn btn-primary'>Update Course</button>
-                <button className='btn btn-secondary'>Delete Course</button>
+                <button 
+                  className='btn btn-secondary' 
+                  onClick={()=>DeleteCourse(course._id)}
+                >Delete Course</button>
               </span>
             </div>
           ))}

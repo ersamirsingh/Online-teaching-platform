@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import { toast } from 'react-hot-toast';
-// import axiosClient from '../API/axiosClient';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
