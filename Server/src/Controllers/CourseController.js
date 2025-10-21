@@ -80,19 +80,22 @@ const DeleteCourse = async (req, res)=>{
 
    try {
 
+      console.log("I'm hitted")
+      const {id} = req.params
+
       const _id = req.user._id
       if(!_id)
          return res.status(404).json({
             message: 'user not found'
          })
 
-      const course = await Course.findOne({teacherId: _id})
+      const course = await Course.findOne({teacherId: _id, _id:id})
       if(!course)
          return res.status(400).json({
             message: 'Course not found'
          })
 
-      await Course.findOneAndDelete({teacherId: _id})
+      await Course.findByIdAndDelete({id}).populate('lessons')
 
       return res.status(200).json({
          message: 'course deleted successfully'
