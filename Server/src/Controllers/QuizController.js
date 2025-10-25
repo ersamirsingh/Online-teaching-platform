@@ -160,9 +160,30 @@ const updateQuiz = async (req, res)=>{
 
    try {
       
-      // const 
+      const {id} = req.params
+      if(!id)
+         return res.status(400).json({
+            message: 'Id not found'
+         })
+
+      const quiz = await Quiz.findById(id)
+      if(!quiz)
+         return res.status(400).json({
+            message: 'Quiz not found'
+         })
+
+      const updated = await Quiz.findByIdAndUpdate(id, req.body)
+      res.status(201).json({
+         success: true,
+         updated
+      }) 
    } catch (error) {
       
+      res.status(500).json({
+         success: false,
+         message: 'Internal Server Error',
+         error: error.message
+      })
    }
 }
 

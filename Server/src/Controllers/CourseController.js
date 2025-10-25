@@ -80,7 +80,7 @@ const DeleteCourse = async (req, res)=>{
 
    try {
 
-      console.log("I'm hitted")
+      // console.log("I'm hitted")
       const {id} = req.params
 
       const _id = req.user._id
