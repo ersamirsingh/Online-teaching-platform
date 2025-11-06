@@ -38,6 +38,11 @@ const Register = () => {
       dispatch(registerUser(data));
    };
 
+     const handleGoogle = () => {
+    // integrate Google OAuth here
+    alert("Mock: Launch Google OAuth flow (replace with real flow)");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-indigo-800 to-blue-700 p-6">
       <motion.div
@@ -53,7 +58,7 @@ const Register = () => {
           transition={{ delay: 0.2 }}
           className="text-center text-4xl font-extrabold text-white mb-8"
         >
-          TechBEE 🚀
+          KaamSetu
         </motion.h2>
 
         {/* Error Alert */}
@@ -69,7 +74,7 @@ const Register = () => {
 
         {/* Registration Form */}
         <form onSubmit={handleSubmit(sendData)} className="space-y-6">
-          {/* First Name */}
+     
           <div>
             <label className="block text-white/90 mb-2">Full Name</label>
             <input
@@ -88,7 +93,7 @@ const Register = () => {
           </div>
 
           {/* Email */}
-          <div>
+          {/* <div>
             <label className="block text-white/90 mb-2">Email Address</label>
             <input
               type="email"
@@ -103,7 +108,7 @@ const Register = () => {
                 {errors.emailId.message}
               </p>
             )}
-          </div>
+          </div> */}
 
           {/* Contact */}
           <div>
@@ -163,8 +168,17 @@ const Register = () => {
             {loading ? "Registering..." : "Register"}
           </motion.button>
         </form>
-
+            <div className="divider my-6">OR</div>
         {/* Redirect to Login */}
+        <div>
+          <button
+            onClick={handleGoogle}
+            className="btn btn-outline w-2/3 ml-17 flex items-center justify-center gap-3"
+          >
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+            Continue with Google
+          </button>
+        </div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
