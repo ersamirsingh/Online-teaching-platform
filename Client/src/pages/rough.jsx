@@ -578,3 +578,371 @@
 // export default Register;
 
 
+
+
+
+import React, { useState } from 'react';
+import { Camera, Mail, Phone, MapPin, Calendar, BookOpen, Award, Briefcase, Edit2, Save, X, GraduationCap, Star, Clock, Users } from 'lucide-react';
+
+export default function ProfilePage() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [profileData, setProfileData] = useState({
+    name: 'Sarah Johnson',
+    title: 'Full Stack Developer & Educator',
+    email: 'sarah.johnson@email.com',
+    phone: '+1 (555) 123-4567',
+    location: 'San Francisco, CA',
+    bio: 'Passionate educator with 5+ years of experience in teaching programming and web development. Committed to creating engaging learning experiences.',
+    joinDate: 'January 2020',
+    photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+    education: [
+      { degree: 'M.S. Computer Science', school: 'Stanford University', year: '2018' },
+      { degree: 'B.S. Software Engineering', school: 'UC Berkeley', year: '2016' }
+    ],
+    courses: [
+      { name: 'Advanced JavaScript', students: 1250, rating: 4.8, status: 'Active' },
+      { name: 'React Development', students: 980, rating: 4.9, status: 'Active' },
+      { name: 'Node.js Fundamentals', students: 756, rating: 4.7, status: 'Active' }
+    ],
+    achievements: [
+      { title: 'Top Instructor 2024', description: 'Ranked in top 5% of instructors' },
+      { title: '10K Students Milestone', description: 'Taught over 10,000 students' },
+      { title: 'Excellence Award', description: 'Outstanding course content quality' }
+    ],
+    skills: ['JavaScript', 'React', 'Node.js', 'Python', 'MongoDB', 'Docker', 'AWS'],
+    experience: [
+      { role: 'Senior Instructor', company: 'EduPlatform', period: '2020 - Present' },
+      { role: 'Software Engineer', company: 'Tech Corp', period: '2018 - 2020' }
+    ],
+    stats: {
+      totalStudents: 10500,
+      totalCourses: 12,
+      avgRating: 4.8,
+      totalHours: 240
+    }
+  });
+
+  const [editData, setEditData] = useState(profileData);
+
+  const handleEdit = () => {
+    setIsEditing(true);
+    setEditData(profileData);
+  };
+
+  const handleSave = () => {
+    setProfileData(editData);
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setEditData(profileData);
+    setIsEditing(false);
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setEditData(prev => ({ ...prev, photo: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <GraduationCap className="w-8 h-8 text-indigo-600" />
+              <h1 className="text-2xl font-bold text-gray-900">EduPlatform</h1>
+            </div>
+            {!isEditing ? (
+              <button
+                onClick={handleEdit}
+                className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+              >
+                <Edit2 className="w-4 h-4" />
+                <span>Edit Profile</span>
+              </button>
+            ) : (
+              <div className="flex space-x-2">
+                <button
+                  onClick={handleSave}
+                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save</span>
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition"
+                >
+                  <X className="w-4 h-4" />
+                  <span>Cancel</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column - Profile Card */}
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-lg p-6 sticky top-6">
+              {/* Profile Photo */}
+              <div className="relative w-32 h-32 mx-auto mb-4">
+                <img
+                  src={isEditing ? editData.photo : profileData.photo}
+                  alt="Profile"
+                  className="w-32 h-32 rounded-full object-cover border-4 border-indigo-100"
+                />
+                {isEditing && (
+                  <label className="absolute bottom-0 right-0 bg-indigo-600 p-2 rounded-full cursor-pointer hover:bg-indigo-700 transition">
+                    <Camera className="w-4 h-4 text-white" />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoUpload}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+              </div>
+
+              {/* Name and Title */}
+              {isEditing ? (
+                <div className="space-y-3 mb-4">
+                  <input
+                    type="text"
+                    value={editData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    placeholder="Full Name"
+                  />
+                  <input
+                    type="text"
+                    value={editData.title}
+                    onChange={(e) => handleInputChange('title', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    placeholder="Professional Title"
+                  />
+                </div>
+              ) : (
+                <div className="text-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-1">{profileData.name}</h2>
+                  <p className="text-gray-600">{profileData.title}</p>
+                </div>
+              )}
+
+              {/* Contact Info */}
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center space-x-3 text-gray-700">
+                  <Mail className="w-4 h-4 text-indigo-600" />
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      value={editData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      className="flex-1 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+                    />
+                  ) : (
+                    <span className="text-sm">{profileData.email}</span>
+                  )}
+                </div>
+                <div className="flex items-center space-x-3 text-gray-700">
+                  <Phone className="w-4 h-4 text-indigo-600" />
+                  {isEditing ? (
+                    <input
+                      type="tel"
+                      value={editData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      className="flex-1 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+                    />
+                  ) : (
+                    <span className="text-sm">{profileData.phone}</span>
+                  )}
+                </div>
+                <div className="flex items-center space-x-3 text-gray-700">
+                  <MapPin className="w-4 h-4 text-indigo-600" />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={editData.location}
+                      onChange={(e) => handleInputChange('location', e.target.value)}
+                      className="flex-1 px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm"
+                    />
+                  ) : (
+                    <span className="text-sm">{profileData.location}</span>
+                  )}
+                </div>
+                <div className="flex items-center space-x-3 text-gray-700">
+                  <Calendar className="w-4 h-4 text-indigo-600" />
+                  <span className="text-sm">Joined {profileData.joinDate}</span>
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 gap-3 pt-6 border-t border-gray-200">
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-indigo-600">{profileData.stats.totalStudents.toLocaleString()}</div>
+                  <div className="text-xs text-gray-600">Students</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-indigo-600">{profileData.stats.totalCourses}</div>
+                  <div className="text-xs text-gray-600">Courses</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-indigo-600">{profileData.stats.avgRating}</div>
+                  <div className="text-xs text-gray-600">Avg Rating</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-indigo-600">{profileData.stats.totalHours}+</div>
+                  <div className="text-xs text-gray-600">Hours Content</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Details */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* About Section */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">About</h3>
+              {isEditing ? (
+                <textarea
+                  value={editData.bio}
+                  onChange={(e) => handleInputChange('bio', e.target.value)}
+                  rows="4"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  placeholder="Tell us about yourself..."
+                />
+              ) : (
+                <p className="text-gray-700 leading-relaxed">{profileData.bio}</p>
+              )}
+            </div>
+
+            {/* Skills Section */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Skills & Expertise</h3>
+              <div className="flex flex-wrap gap-2">
+                {profileData.skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Courses Section */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <BookOpen className="w-5 h-5 mr-2 text-indigo-600" />
+                Active Courses
+              </h3>
+              <div className="space-y-4">
+                {profileData.courses.map((course, index) => (
+                  <div key={index} className="p-4 border border-gray-200 rounded-lg hover:border-indigo-300 transition">
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-semibold text-gray-900">{course.name}</h4>
+                      <span className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full">
+                        {course.status}
+                      </span>
+                    </div>
+                    <div className="flex items-center space-x-4 text-sm text-gray-600">
+                      <div className="flex items-center">
+                        <Users className="w-4 h-4 mr-1" />
+                        {course.students} students
+                      </div>
+                      <div className="flex items-center">
+                        <Star className="w-4 h-4 mr-1 text-yellow-500 fill-yellow-500" />
+                        {course.rating}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Education Section */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <GraduationCap className="w-5 h-5 mr-2 text-indigo-600" />
+                Education
+              </h3>
+              <div className="space-y-4">
+                {profileData.education.map((edu, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <GraduationCap className="w-5 h-5 text-indigo-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{edu.degree}</h4>
+                      <p className="text-gray-600 text-sm">{edu.school}</p>
+                      <p className="text-gray-500 text-sm">{edu.year}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Experience Section */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <Briefcase className="w-5 h-5 mr-2 text-indigo-600" />
+                Experience
+              </h3>
+              <div className="space-y-4">
+                {profileData.experience.map((exp, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Briefcase className="w-5 h-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{exp.role}</h4>
+                      <p className="text-gray-600 text-sm">{exp.company}</p>
+                      <p className="text-gray-500 text-sm">{exp.period}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Achievements Section */}
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <Award className="w-5 h-5 mr-2 text-indigo-600" />
+                Achievements
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {profileData.achievements.map((achievement, index) => (
+                  <div key={index} className="p-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
+                    <div className="flex items-start space-x-3">
+                      <Award className="w-6 h-6 text-yellow-600 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-1">{achievement.title}</h4>
+                        <p className="text-sm text-gray-600">{achievement.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
