@@ -1,5 +1,6 @@
 const Course = require("../Models/Course")
 const Quiz = require("../Models/Quiz")
+const Lesson = require('../Models/Lesson')
 
 
 
@@ -15,8 +16,8 @@ const createQuiz = async (req, res) => {
          });
       }
 
-      const {courseId} = req.params
-      if(!courseId)
+      const {courseId, lessonId} = req.params
+      if(!courseId || !lessonId)
          return res.status(400).json({
             message: 'CourseId not found'
          })
@@ -27,12 +28,19 @@ const createQuiz = async (req, res) => {
             message: 'Unavailable course'
          })
 
+      const lesson = await Lesson.findById(lessonId)
+      if(!lesson)
+         return res.status(404).json({
+            message: 'Unavailable Lesson'
+         })
 
-      const quiz = await Quiz.create({...req.body, courseId})
+
+      const quiz = await Quiz.create({...req.body, courseId, lessonId})
       if(!quiz)
          return res.status(404).json({
             message: 'Quiz not created'
          })
+   
       // console.log(quiz)
       res.status(201).json({
          success: true,
@@ -52,20 +60,26 @@ const createQuiz = async (req, res) => {
 
 
 const getQuizes = async (req, res) => {
-   
-   try {
-      // console.log(req.body)
 
-      const {courseId} = req.body
+   try {
+      // console.log(req.params)
+
+      const {courseId, lessonId} = req.params
       if(!courseId)
          return res.status(400).json({
             message: 'CourseId not found'
          })
 
-      const quiz = await Quiz.find({courseId})
-      if(!quiz)
-         return res.status(404).json({
-            message: 'Unavailable course'
+      if(!lessonId)
+         return res.status(400).json({
+            message: 'LessonId not found'
+         })
+      
+      const quiz = await Quiz.find({courseId, lessonId}) || {}
+      if(!quiz || quiz.length===0)
+         return res.status(400).json({
+            success: false,
+            message: 'Quiz not found'
          })
 
       res.status(201).json({
@@ -84,34 +98,41 @@ const getQuizes = async (req, res) => {
 
 
 
+
 const submitQuiz = async (req, res) => {
 
    try {
       
-      const {quizId} = req.params
-      const {responses} = req.body
+      const {lessonId, courseId} = req.body
+      const responses = req.body.answers
       const studentId = req.user?._id
       // console.log(req.user)
-      if(!quizId)
+      if(!lessonId || !courseId)
          return res.status(400).json({
-            message: 'QuizId not found'
+            success: false,
+            message: 'QuizId or CourseId not found'
          })
 
       if(!studentId)
          return res.status(400).json({
+            success: false,
             message: 'StudentId not found'
          })
       
       if(!responses || responses.length === 0)
          return res.status(400).json({
+            success: false,
             message: 'Responses not found'
          })
 
-      const quiz = await Quiz.findById(quizId)
+
+      const quiz = await Quiz.findOne({lessonId, courseId})
       if(!quiz)
          return res.status(400).json({
+            success: false,
             message: 'Quiz not found'
          })
+
 
       // console.log(quiz)
 
@@ -138,8 +159,7 @@ const submitQuiz = async (req, res) => {
          success: true,
          score
       })
-      
-      
+       
 
    } catch (error) {
       

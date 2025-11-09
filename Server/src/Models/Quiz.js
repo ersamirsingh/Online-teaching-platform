@@ -10,6 +10,12 @@ const quizSchema = new Schema({
       required: true,
    },
 
+   lessonId: {
+      type: Schema.Types.ObjectId,
+      ref: 'lesson',
+      required: true,
+   },
+
    questions: [
       {
          question: { 
@@ -35,6 +41,7 @@ const quizSchema = new Schema({
             type: Schema.Types.ObjectId, 
             ref: 'user' 
          },
+         
          responses: [
             {
                questionId: { 

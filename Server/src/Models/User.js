@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
+
 
 const userSchema = new Schema(
   {
@@ -58,6 +58,7 @@ const userSchema = new Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+    
   },
   { timestamps: true }
 );
