@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axiosClient from '../API/axiosClient';
 import Header from '../components/Header';
 
@@ -12,12 +12,14 @@ export default function Lesson() {
    const { courseId } = useParams();
    const [loading, setLoading] = useState(false);
    const [lessons, setLessons] = useState([]);
+   const navigate = useNavigate()
 
    const fetchLesson = async () => {
 
       try {
          setLoading(true);
          const response = await axiosClient.get(`/lesson/${courseId}`);
+         console.log(response.data.lessons)
          setLessons(response.data.lessons || []);
       } catch (error) {
          console.error('Error fetching lessons:', error.message);
@@ -88,6 +90,12 @@ export default function Lesson() {
                               </ul>
                            </div>
                         )}
+                        <button 
+                           className='btn btn-error mt-6'
+                           onClick={() => navigate(`/quiz/${courseId}/${lesson._id}`)}
+                        >
+                           Quiz
+                        </button>
                      </div>
                   ))}
                </div>

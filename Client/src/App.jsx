@@ -15,18 +15,14 @@ import Admin from './Admin/Admin';
 import Course from './pages/Course';
 import TechBEELanding from './pages/TechBee';
 import ViewCourses from './Admin/Course/ViewCourses';
-import Quiz from './pages/QuizPage';
+import QuizPage from './components/QuizPage';
 import Profile from './pages/Profile';
 import Subscription from './pages/Subscription';
 import Lesson from './pages/Lesson';
 import CourseDetails from './Admin/Course/CourseDetails';
 
 
-
-
-
 function App() {
-
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
 
@@ -65,8 +61,8 @@ function App() {
           element={isAuthenticated ? <Course /> : <Navigate to="/login" />}
         ></Route>
         <Route
-          path="/quiz"
-          element={isAuthenticated ? <Quiz /> : <Navigate to="/login" />}
+          path={`/quiz/:courseId/:lessonId`}
+          element={isAuthenticated ? <QuizPage /> : <Navigate to="/login" />}
         ></Route>
         <Route
           path="/subscription"
@@ -81,8 +77,9 @@ function App() {
         <Route
           path="/admin/viewcourses"
           element={
-            !isAuthenticated ? ( <Navigate to="/login" />) 
-            : isAuthenticated && user.role === 'admin' ? (
+            !isAuthenticated ? (
+              <Navigate to="/login" />
+            ) : isAuthenticated && user.role === 'admin' ? (
               <ViewCourses />
             ) : (
               <Navigate to="/" />
@@ -92,8 +89,9 @@ function App() {
         <Route
           path="/admin/viewcourses/coursedetails"
           element={
-            !isAuthenticated ? ( <Navigate to="/login" />) 
-            : isAuthenticated && user.role === 'admin' ? (
+            !isAuthenticated ? (
+              <Navigate to="/login" />
+            ) : isAuthenticated && user.role === 'admin' ? (
               <CourseDetails />
             ) : (
               <Navigate to="/" />
@@ -102,7 +100,7 @@ function App() {
         ></Route>
         <Route
           path={`/lesson/:courseId`}
-          element={isAuthenticated ? <Lesson/> : <Navigate to="/login" />}
+          element={isAuthenticated ? <Lesson /> : <Navigate to="/login" />}
         ></Route>
       </Routes>
     </Router>
