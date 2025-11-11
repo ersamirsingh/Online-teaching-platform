@@ -104,23 +104,29 @@
 
 import React, { useState } from 'react';
 import { Camera, Mail, Phone, MapPin, Calendar, BookOpen, Award, Briefcase, Edit2, Save, X, GraduationCap, Star, Users, Upload, Plus, Trash2, Check } from 'lucide-react';
+import { useSelector } from 'react-redux';
+
+
 
 export default function UserProfileSetup() {
+
   const [step, setStep] = useState('view');
   const [currentStep, setCurrentStep] = useState(1);
+  const {user} = useSelector(state => state.auth)
   
+
   const [profileData, setProfileData] = useState({
-    name: '',
+    name: user.firstName,
     title: '',
-    email: '',
-    phone: '',
+    email: user.emailId,
+    phone: user.contact || null,
     location: '',
     bio: '',
     dateOfBirth: '',
     gender: '',
     joinDate: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
     photo: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop',
-    userType: 'student',
+    userType: user.role,
     education: [],
     courses: [],
     interests: [],
@@ -134,6 +140,8 @@ export default function UserProfileSetup() {
       Quize: 2
     }
   });
+
+
 
   const [tempEducation, setTempEducation] = useState({ degree: '', school: '', year: '' });
   const [tempExperience, setTempExperience] = useState({ role: '', company: '', period: '' });
@@ -299,7 +307,7 @@ export default function UserProfileSetup() {
                       type="text"
                       value={profileData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="text-black w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="Enter your full name"
                     />
                   </div>
@@ -309,7 +317,7 @@ export default function UserProfileSetup() {
                       type="text"
                       value={profileData.title}
                       onChange={(e) => handleInputChange('title', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 text-black rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="e.g., Student, Developer, Teacher"
                     />
                   </div>
@@ -319,7 +327,7 @@ export default function UserProfileSetup() {
                       type="email"
                       value={profileData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -329,7 +337,7 @@ export default function UserProfileSetup() {
                       type="tel"
                       value={profileData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="+1 (555) 123-4567"
                     />
                   </div>
@@ -339,7 +347,7 @@ export default function UserProfileSetup() {
                       type="text"
                       value={profileData.location}
                       onChange={(e) => handleInputChange('location', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="City, State/Country"
                     />
                   </div>
@@ -349,13 +357,13 @@ export default function UserProfileSetup() {
                       type="date"
                       value={profileData.dateOfBirth}
                       onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-2">I am a:</label>
                     <div className="flex space-x-4">
-                      <label className="flex items-center">
+                      <label className="flex items-center text-black">
                         <input
                           type="radio"
                           value="student"
@@ -365,7 +373,7 @@ export default function UserProfileSetup() {
                         />
                         Student/Learner
                       </label>
-                      <label className="flex items-center">
+                      <label className="flex items-center text-black">
                         <input
                           type="radio"
                           value="instructor"
@@ -385,7 +393,7 @@ export default function UserProfileSetup() {
                     value={profileData.bio}
                     onChange={(e) => handleInputChange('bio', e.target.value)}
                     rows="4"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border text-black border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     placeholder="Tell us about yourself, your goals, and what you want to learn..."
                   />
                 </div>
@@ -402,14 +410,14 @@ export default function UserProfileSetup() {
                       type="text"
                       value={tempEducation.degree}
                       onChange={(e) => setTempEducation({...tempEducation, degree: e.target.value})}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="Degree/Certification"
                     />
                     <input
                       type="text"
                       value={tempEducation.school}
                       onChange={(e) => setTempEducation({...tempEducation, school: e.target.value})}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="School/Institution"
                     />
                     <div className="flex space-x-2">
@@ -417,12 +425,12 @@ export default function UserProfileSetup() {
                         type="text"
                         value={tempEducation.year}
                         onChange={(e) => setTempEducation({...tempEducation, year: e.target.value})}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="text-black flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         placeholder="Year"
                       />
                       <button
                         onClick={addEducation}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+                        className="text-black px-4 py-2 bg-indigo-60 rounded-lg hover:bg-indigo-700 transition"
                       >
                         <Plus className="w-5 h-5" />
                       </button>
@@ -457,7 +465,7 @@ export default function UserProfileSetup() {
                       value={tempSkill}
                       onChange={(e) => setTempSkill(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && addSkill()}
-                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="text-black flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="e.g., JavaScript, Communication"
                     />
                     <button
@@ -499,8 +507,8 @@ export default function UserProfileSetup() {
                       onClick={() => toggleInterest(interest)}
                       className={`p-3 rounded-lg border-2 transition ${
                         profileData.interests.includes(interest)
-                          ? 'border-indigo-600 bg-indigo-50 text-indigo-700'
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? 'text-black border-indigo-600 bg-indigo-5'
+                          : 'text-black border-gray-300 hover:border-gray-400'
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -525,14 +533,14 @@ export default function UserProfileSetup() {
                       type="text"
                       value={tempExperience.role}
                       onChange={(e) => setTempExperience({...tempExperience, role: e.target.value})}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="Role/Position"
                     />
                     <input
                       type="text"
                       value={tempExperience.company}
                       onChange={(e) => setTempExperience({...tempExperience, company: e.target.value})}
-                      className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                      className="text-black px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       placeholder="Company/Organization"
                     />
                     <div className="flex space-x-2">
@@ -540,7 +548,7 @@ export default function UserProfileSetup() {
                         type="text"
                         value={tempExperience.period}
                         onChange={(e) => setTempExperience({...tempExperience, period: e.target.value})}
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="text-black flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                         placeholder="Period"
                       />
                       <button
