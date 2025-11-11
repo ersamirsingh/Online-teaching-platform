@@ -274,13 +274,20 @@ const updateUser = async (req, res) => {
 
 const validUser = async (req, res)=>{
 
+   if(!req.user)
+      return res.status(404).json({
+         message: 'User not found'
+      })
 
    const reply = {
       success: true,
+      message: 'User logged in successfully',
+      userId: req.user?._id,
       firstName: req.user?.firstName,
-      emailId: req.user.emailId,
-      _id: req.user._id,
-      role: req.user.role
+      lastName: req.user?.lastName,
+      emailId: req.user?.emailId,
+      contact: req.user?.contact,
+      role: req.user?.role,
    }
 
    res.status(200).json({
