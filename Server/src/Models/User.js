@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
+const validate = require('../Utils/Validate');
 const { Schema } = mongoose;
 
 
-const userSchema = new Schema(
-  {
+const userSchema = new Schema({
+
     firstName: {
       type: String,
       minlength: 3,
@@ -58,9 +59,63 @@ const userSchema = new Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+
+    location:{
+      type: String,
+      trim: true
+    },
+
+    professionalTitle:{
+      type: [String],
+      validate: {
+        validator: (arr) => arr.length <= 20,
+        message: 'Maximum 20 titles allowed.',
+      }
+    },
+
+    dob:{
+      type: String,
+      maxLength:11,
+    },
+
+    bio:{
+      type: String,
+      maxLength: 1000,
+      minLength: 30,
+    },
+
+    skills:{
+      type: [String],
+      validate: {
+        validator: (arr) => arr.length <= 25,
+        message: 'Maximum 25 interests allowed.',
+      },
+    },
+
+    interst:{
+      type: [String],
+      maxLength: 40
+    },
+
+    workExperience: [
+      {
+        role: {
+          type: String,
+          maxLength: 30,
+          minLength: 4,
+        },
+        organization: {
+          type: String,
+          maxLength: 50 
+        },
+        period: {
+          type: Number
+        }
+      }
+    ]
+
     
-  },
-  { timestamps: true }
+  },{ timestamps: true }
 );
 
 
