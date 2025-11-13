@@ -59,9 +59,6 @@ const Header = () => {
               <NavLink className="btn btn-ghost rounded-2xl text-white" to="/course">
                 Course
               </NavLink>
-              <NavLink className="btn btn-ghost rounded-2xl text-white" to="/quiz">
-                Quiz
-              </NavLink>
               <NavLink
                 className="btn btn-ghost rounded-2xl text-white"
                 to="/subscription"

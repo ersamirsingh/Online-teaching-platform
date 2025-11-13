@@ -17,7 +17,7 @@ export default function Admin() {
          {
             title: 'Create New Course',
             color:'bg-fuchsia-400',
-            action: () => setActiveTab('create-course'),
+            action: () => navigate('/admin/createcourse'),
          },
          {
             title: 'View All Courses',

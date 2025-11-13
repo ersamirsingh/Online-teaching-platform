@@ -20,9 +20,14 @@ import Profile from './pages/Profile';
 import Subscription from './pages/Subscription';
 import Lesson from './pages/Lesson';
 import CourseDetails from './Admin/Course/CourseDetails';
+import CreateCourse from './Admin/Course/CreateCourse';
+
+
 
 
 function App() {
+
+
   const dispatch = useDispatch();
   const { isAuthenticated, user } = useSelector(state => state.auth);
 
@@ -73,6 +78,18 @@ function App() {
         <Route
           path="/profile"
           element={isAuthenticated ? <Profile /> : <Navigate to="/login" />}
+        ></Route>
+        <Route
+          path="/admin/createcourse"
+          element={
+            !isAuthenticated ? (
+              <Navigate to="/login" />
+            ) : isAuthenticated && user.role === 'admin' ? (
+              <CreateCourse />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         ></Route>
         <Route
           path="/admin/viewcourses"
